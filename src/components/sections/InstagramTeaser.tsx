@@ -9,11 +9,11 @@ gsap.registerPlugin(ScrollTrigger)
 
 const instaImages = [
   'https://images.unsplash.com/photo-1596728325488-58c87691e9af?w=300&q=80',
-  'https://images.unsplash.com/photo-1621605815971-fbc98d665666?w=300&q=80',
-  'https://images.unsplash.com/photo-1593702288056-2c160f0c5faa?w=300&q=80',
-  'https://images.unsplash.com/photo-1567894340315-735d7c361db7?w=300&q=80',
-  'https://images.unsplash.com/photo-1585747861115-d7dbb32bae7c?w=300&q=80',
-  'https://images.unsplash.com/photo-1503951914875-452cb67b3c8e?w=300&q=80',
+  'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=300&q=80',
+  'https://images.unsplash.com/photo-1560869713-7d0a29430803?w=300&q=80',
+  'https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=300&q=80',
+  'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=300&q=80',
+  'https://images.unsplash.com/photo-1621607512214-68297480165e?w=300&q=80',
 ]
 
 export function InstagramTeaser() {

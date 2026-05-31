@@ -118,7 +118,7 @@ export function Hero() {
                 <div className="absolute -inset-4 rounded-2xl border border-[#C9A84C]/20 bg-gradient-to-br from-[#C9A84C]/10 to-transparent" />
                 <div className="absolute inset-0 rounded-xl overflow-hidden">
                   <img
-                    src="https://images.unsplash.com/photo-1585747861115-d7dbb32bae7c?w=600&q=80"
+                    src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=80"
                     alt="Master Barber Ben Ozzly at Golden Scissors Salon"
                     className="w-full h-full object-cover"
                   />
@@ -135,7 +135,7 @@ export function Hero() {
           <span className="text-[10px] text-[#888888] tracking-[0.2em] uppercase font-accent">
             Scroll
           </span>
-          <ChevronDown className="w-4 h-4 text-[#C9A84C] animate-bounce" />
+          <ChevronDown className="w-4 h-4 text-[#C9A84C] animate-fade-up" />
         </div>
       </div>
     </section>

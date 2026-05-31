@@ -14,27 +14,27 @@ const galleryImages = [
     span: 'row-span-2',
   },
   {
-    src: 'https://images.unsplash.com/photo-1593702288056-2c160f0c5faa?w=500&q=80',
+    src: 'https://images.unsplash.com/photo-1560869713-7d0a29430803?w=500&q=80',
     alt: 'Modern taper haircut at Golden Scissors Salon',
     span: '',
   },
   {
-    src: 'https://images.unsplash.com/photo-1621605815971-fbc98d665666?w=500&q=80',
+    src: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=500&q=80',
     alt: 'Beard trim and grooming service Jinja',
     span: '',
   },
   {
-    src: 'https://images.unsplash.com/photo-1567894340315-735d7c361db7?w=500&q=80',
+    src: 'https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=500&q=80',
     alt: 'Barbershop interior Golden Scissors Salon Main Street Jinja',
     span: '',
   },
   {
-    src: 'https://images.unsplash.com/photo-1585747861115-d7dbb32bae7c?w=500&q=80',
+    src: 'https://images.unsplash.com/photo-1559599101-f09722fb4948?w=500&q=80',
     alt: 'Professional barber at work in Golden Scissors',
     span: 'row-span-2',
   },
   {
-    src: 'https://images.unsplash.com/photo-1503951914875-452cb67b3c8e?w=500&q=80',
+    src: 'https://images.unsplash.com/photo-1621607512214-68297480165e?w=500&q=80',
     alt: 'Hot towel shave experience barber service',
     span: '',
   },
