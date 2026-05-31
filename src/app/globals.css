@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0A0A0A;
+  --color-foreground: #F5F0E8;
+  --color-primary: #C9A84C;
+  --color-primary-foreground: #0A0A0A;
+  --color-muted: #1A1A1A;
+  --color-muted-foreground: #888888;
+  --color-accent: #8B6914;
+  --color-surface: #141414;
+  --color-border: #2A2A2A;
+  --color-card: #1A1A1A;
+  --color-card-foreground: #F5F0E8;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+
+  --animate-fade-in: fade-in 0.6s ease-out;
+  --animate-fade-up: fade-up 0.6s ease-out;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* Base styles */
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Hide native cursor when CursorFollower is active */
+html.cursor-follower-active,
+html.cursor-follower-active * {
+  cursor: none !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2A2A2A;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C9A84C;
+}
+
+/* Selection */
+::selection {
+  background-color: rgba(201, 168, 76, 0.3);
+  color: #F5F0E8;
+}
+
+/* Gold underline class */
+.gold-underline {
+  background-image: linear-gradient(to right, #C9A84C, #D4A843);
+  background-size: 0 2px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size 0.4s ease;
+}
+
+.gold-underline:hover {
+  background-size: 100% 2px;
+}
+
+/* Gold glow for CTAs */
+.gold-glow {
+  box-shadow: 0 0 20px rgba(201, 168, 76, 0.15), 0 4px 12px rgba(201, 168, 76, 0.1);
+}
+
+.gold-glow:hover {
+  box-shadow: 0 0 30px rgba(201, 168, 76, 0.3), 0 6px 20px rgba(201, 168, 76, 0.15);
+}
+
+/* Grain overlay */
+.grain-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  opacity: 0.025;
+}
+
+/* Leaflet specific z-index fix for dark theme */
+.leaflet-container {
+  z-index: 1 !important;
+}
