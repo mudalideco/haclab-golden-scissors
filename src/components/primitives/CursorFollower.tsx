@@ -68,18 +68,17 @@ export function CursorFollower() {
           width: 6,
           height: 6,
           borderRadius: '50%',
-          backgroundColor: '#C9A84C',
+          backgroundColor: 'var(--color-primary)',
           transform: 'translate(-50%, -50%)',
         }}
       />
       <div
         ref={ring}
-        className="pointer-events-none fixed z-[9998]"
+        className="pointer-events-none fixed z-[9998] border border-primary"
         style={{
           width: 32,
           height: 32,
           borderRadius: '50%',
-          border: '1.5px solid #C9A84C',
           transform: 'translate(-50%, -50%)',
           transition: 'width 0.3s, height 0.3s',
         }}

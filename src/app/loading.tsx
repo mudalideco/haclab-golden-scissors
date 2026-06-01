@@ -1,9 +1,11 @@
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
-      <div className="text-center">
-        <div className="w-12 h-12 border-2 border-[#C9A84C] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-        <p className="text-[#888888] text-sm">Loading Golden Scissors...</p>
+    <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-10 h-10 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+        <p className="text-sm text-muted-foreground font-accent tracking-wider uppercase">
+          Loading...
+        </p>
       </div>
     </div>
   )

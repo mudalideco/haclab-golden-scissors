@@ -12,6 +12,8 @@
   --color-border: #2A2A2A;
   --color-card: #1A1A1A;
   --color-card-foreground: #F5F0E8;
+  --color-muted-text: #B0A898;
+  --color-subtle: #555555;
 
   --radius-sm: 0.25rem;
   --radius-md: 0.375rem;
@@ -76,19 +78,6 @@ html.cursor-follower-active * {
   color: #F5F0E8;
 }
 
-/* Gold underline class */
-.gold-underline {
-  background-image: linear-gradient(to right, #C9A84C, #D4A843);
-  background-size: 0 2px;
-  background-repeat: no-repeat;
-  background-position: left bottom;
-  transition: background-size 0.4s ease;
-}
-
-.gold-underline:hover {
-  background-size: 100% 2px;
-}
-
 /* Gold glow for CTAs */
 .gold-glow {
   box-shadow: 0 0 20px rgba(201, 168, 76, 0.15), 0 4px 12px rgba(201, 168, 76, 0.1);
@@ -96,15 +85,6 @@ html.cursor-follower-active * {
 
 .gold-glow:hover {
   box-shadow: 0 0 30px rgba(201, 168, 76, 0.3), 0 6px 20px rgba(201, 168, 76, 0.15);
-}
-
-/* Grain overlay */
-.grain-overlay {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  opacity: 0.025;
 }
 
 /* Leaflet specific z-index fix for dark theme */

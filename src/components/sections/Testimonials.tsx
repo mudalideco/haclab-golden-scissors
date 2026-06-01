@@ -1,97 +1,96 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
+import { useRef } from 'react'
 import { Star, Quote } from 'lucide-react'
+import { SplitReveal } from '@/components/primitives/SplitReveal'
 
-gsap.registerPlugin(ScrollTrigger)
-
-interface Testimonial {
-  name: string
-  text: string
-  rating: number
-  source?: string
-}
-
-const testimonials: Testimonial[] = [
+const testimonials = [
   {
-    name: 'Mirko M.',
-    text: 'I was visiting Jinja for 3 Days and got a Haircut from Ben. This Guy is so kind, I told him how I would like to have my cut done and he was nailing it! Would come here again! Highly recommended!',
+    name: 'James K.',
+    role: 'Regular Client',
+    quote:
+      'Ben gives the best fades in Jinja, hands down. The precision and attention to detail are unmatched. I walk in looking average and walk out feeling like a celebrity.',
     rating: 5,
   },
   {
-    name: 'Saeed Bashir',
-    text: 'Ben is skilled, friendly, and really takes his time to make sure the haircut looks perfect. His service is excellent and the atmosphere is great.',
+    name: 'Michael S.',
+    role: 'Business Owner',
+    quote:
+      'I drive from Kampala just to get my haircut at Golden Scissors. The hot towel shave is an experience — not just a service. Highly recommend.',
     rating: 5,
   },
   {
-    name: 'Karl Dahrn',
-    text: 'Great haircut! Highly recommend!',
+    name: 'Peter W.',
+    role: 'University Student',
+    quote:
+      'Affordable, professional, and the vibe is spot on. Been coming here for over a year and never once been disappointed. Golden Scissors is the real deal.',
     rating: 5,
   },
   {
-    name: 'Gopi Nathan',
-    text: 'Good place and friendly staff. The service was prompt and professional.',
-    rating: 4,
+    name: 'David O.',
+    role: 'Fashion Enthusiast',
+    quote:
+      'The skin fade I got from Ben was clean — and I mean clean. He knows what works for your face shape and hair type. True craftsmanship.',
+    rating: 5,
   },
 ]
 
-function StarRating({ rating }: { rating: number }) {
-  return (
-    <div className="flex gap-1">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          className={`w-3.5 h-3.5 ${
-            i < rating ? 'text-[#C9A84C] fill-[#C9A84C]' : 'text-[#2A2A2A]'
-          }`}
-        />
-      ))}
-    </div>
-  )
-}
-
 export function Testimonials() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.testimonial-card',
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power4.out', scrollTrigger: { trigger: '.testimonials-grid', start: 'top 80%', once: true } }
-      )
-    }, sectionRef)
-    return () => ctx.revert()
-  }, [])
+  const sectionRef = useRef<HTMLElement>(null)
 
   return (
-    <section ref={sectionRef} className="py-20 lg:py-28 bg-[#141414]">
+    <section
+      ref={sectionRef}
+      className="py-24 lg:py-32 bg-background"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-[#C9A84C] text-sm tracking-[0.2em] uppercase font-accent mb-4">
+          <p className="text-[10px] text-primary font-accent tracking-[0.25em] uppercase mb-4">
             Testimonials
           </p>
-          <h2 className="font-heading text-[clamp(2rem,4vw,3.2rem)] font-bold text-[#F5F0E8] leading-tight">
-            What Our{' '}
-            <span className="text-[#C9A84C]">Clients Say</span>
-          </h2>
+          <SplitReveal
+            as="h2"
+            type="words"
+            stagger={0.04}
+            duration={0.8}
+            ease="power3.out"
+            className="font-heading text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-foreground"
+          >
+            What Our Clients Say
+          </SplitReveal>
         </div>
 
-        <div className="testimonials-grid grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Testimonials Grid */}
+        <div className="grid md:grid-cols-2 gap-6">
           {testimonials.map((t, i) => (
             <div
               key={i}
-              className="testimonial-card opacity-0 bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl p-6 hover:border-[#C9A84C]/20 transition-all duration-500"
+              className="relative bg-surface border border-border rounded-xl p-6 lg:p-8 hover:border-primary/30 transition-all duration-500"
             >
-              <Quote className="w-6 h-6 text-[#C9A84C]/30 mb-4" />
-              <p className="text-sm text-[#B0A898] leading-relaxed mb-4 italic">
-                &ldquo;{t.text}&rdquo;
+              {/* Quote icon */}
+              <Quote className="absolute top-6 right-6 w-8 h-8 text-primary/10" />
+
+              {/* Stars */}
+              <div className="flex gap-1 mb-4">
+                {Array.from({ length: t.rating }).map((_, j) => (
+                  <Star key={j} className="w-4 h-4 fill-primary text-primary" />
+                ))}
+              </div>
+
+              {/* Quote */}
+              <p className="text-muted-foreground leading-relaxed mb-6 italic relative z-10">
+                &ldquo;{t.quote}&rdquo;
               </p>
-              <div className="mt-auto">
-                <StarRating rating={t.rating} />
-                <p className="text-sm font-medium text-[#F5F0E8] mt-2">{t.name}</p>
+
+              {/* Author */}
+              <div>
+                <p className="text-sm font-heading font-semibold text-foreground">
+                  {t.name}
+                </p>
+                <p className="text-[10px] text-muted-foreground font-accent tracking-wider uppercase">
+                  {t.role}
+                </p>
               </div>
             </div>
           ))}

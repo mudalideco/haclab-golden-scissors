@@ -51,21 +51,21 @@ export function TrustStats() {
   return (
     <section
       ref={sectionRef}
-      className="py-16 lg:py-20 bg-[#141414] border-y border-[#2A2A2A]"
+      className="py-16 lg:py-20 bg-surface border-y border-border"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {stats.map((stat, i) => (
             <div key={i} className="text-center group">
-              <div className="font-heading text-[clamp(3rem,6vw,4.5rem)] font-bold text-[#C9A84C] leading-none mb-2">
+              <div className="font-heading text-[clamp(3rem,6vw,4.5rem)] font-bold text-primary leading-none mb-2">
                 <span
                   ref={(el) => { countersRef.current[i] = el }}
                 >
                   {stat.number}
                 </span>
               </div>
-              <div className="h-[2px] w-12 bg-[#C9A84C]/40 mx-auto mb-3 group-hover:w-20 transition-all duration-500" />
-              <p className="text-sm sm:text-base text-[#888888] font-accent tracking-wider uppercase">
+              <div className="h-[2px] w-12 bg-primary/40 mx-auto mb-3 group-hover:w-20 transition-all duration-500" />
+              <p className="text-sm sm:text-base text-muted-foreground font-accent tracking-wider uppercase">
                 {stat.label}
               </p>
             </div>

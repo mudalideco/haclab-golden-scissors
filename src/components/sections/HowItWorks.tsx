@@ -1,88 +1,87 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-import { MessageSquare, MapPin, MessageCircle, Sparkles } from 'lucide-react'
-
-gsap.registerPlugin(ScrollTrigger)
+import { useRef } from 'react'
+import { MessageSquare, Scissors, Star } from 'lucide-react'
+import { SplitReveal } from '@/components/primitives/SplitReveal'
 
 const steps = [
   {
     icon: MessageSquare,
+    step: '01',
     title: 'Book',
-    description: 'Tap "Book Now" on WhatsApp and tell Ben your preferred time.',
+    desc: 'Message Ben on WhatsApp to pick your service and time slot. Quick, easy, and personal.',
   },
   {
-    icon: MapPin,
-    title: 'Arrive',
-    description: 'Visit Golden Scissors on Plot 3B Main Street, Jinja.',
+    icon: Scissors,
+    step: '02',
+    title: 'Arrive & Relax',
+    desc: 'Walk into our Main Street salon, grab a seat, and let the transformation begin.',
   },
   {
-    icon: MessageCircle,
-    title: 'Consult',
-    description: 'Tell Ben your style — he\'ll recommend what suits you best.',
-  },
-  {
-    icon: Sparkles,
-    title: 'Cut',
-    description: 'Sit back and enjoy a precision cut + wash. Fresh results.',
+    icon: Star,
+    step: '03',
+    title: 'Walk Out Fresh',
+    desc: 'Leave with a precision cut, a smile, and the confidence to take on anything.',
   },
 ]
 
 export function HowItWorks() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.step-item',
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: 'power4.out', scrollTrigger: { trigger: '.steps-container', start: 'top 80%', once: true } }
-      )
-    }, sectionRef)
-    return () => ctx.revert()
-  }, [])
+  const sectionRef = useRef<HTMLElement>(null)
 
   return (
-    <section ref={sectionRef} className="py-20 lg:py-28 bg-[#141414]">
+    <section
+      ref={sectionRef}
+      className="py-24 lg:py-32 bg-background"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-[#C9A84C] text-sm tracking-[0.2em] uppercase font-accent mb-4">
+          <p className="text-[10px] text-primary font-accent tracking-[0.25em] uppercase mb-4">
             How It Works
           </p>
-          <h2 className="font-heading text-[clamp(2rem,4vw,3.2rem)] font-bold text-[#F5F0E8] leading-tight">
-            From Booking to{' '}
-            <span className="text-[#C9A84C]">Fresh Cut</span>
-          </h2>
+          <SplitReveal
+            as="h2"
+            type="words"
+            stagger={0.04}
+            duration={0.8}
+            ease="power3.out"
+            className="font-heading text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-foreground"
+          >
+            Three Steps to Fresh
+          </SplitReveal>
         </div>
 
-        <div className="steps-container relative">
-          {/* Connecting line (desktop) */}
-          <div className="hidden lg:block absolute top-16 left-[calc(12.5%+1.5rem)] right-[calc(12.5%+1.5rem)] h-[2px] bg-gradient-to-r from-[#C9A84C] via-[#C9A84C]/50 to-transparent" />
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
-            {steps.map((step, i) => {
-              const Icon = step.icon
-              return (
-                <div key={i} className="step-item opacity-0 relative">
-                  <div className="flex flex-col items-center text-center">
-                    {/* Step Number */}
-                    <div className="relative mb-6">
-                      <div className="w-14 h-14 rounded-full bg-[#1A1A1A] border-2 border-[#C9A84C]/30 flex items-center justify-center">
-                        <Icon className="w-6 h-6 text-[#C9A84C]" />
-                      </div>
-                      <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-[#C9A84C] text-[#0A0A0A] flex items-center justify-center text-xs font-bold">
-                        {i + 1}
-                      </div>
-                    </div>
-                    <h3 className="font-heading text-lg font-semibold text-[#F5F0E8] mb-2">{step.title}</h3>
-                    <p className="text-sm text-[#888888] leading-relaxed max-w-[220px]">{step.description}</p>
+        {/* Steps */}
+        <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+          {steps.map((step, i) => {
+            const Icon = step.icon
+            return (
+              <div key={i} className="text-center group">
+                {/* Step Number */}
+                <div className="relative inline-flex items-center justify-center mb-6">
+                  <div className="absolute inset-0 bg-primary/5 rounded-full scale-125 group-hover:scale-150 transition-transform duration-500" />
+                  <div className="relative w-16 h-16 rounded-full bg-surface border border-border flex items-center justify-center group-hover:border-primary/50 transition-all duration-300">
+                    <Icon className="w-7 h-7 text-primary" />
                   </div>
                 </div>
-              )
-            })}
-          </div>
+
+                {/* Divider line (between steps) */}
+                {i < steps.length - 1 && (
+                  <div className="hidden md:block absolute top-8 left-[60%] w-[calc(80%)] h-px bg-gradient-to-r from-primary/30 to-transparent" />
+                )}
+
+                <p className="text-[10px] text-primary font-accent tracking-widest uppercase mb-2">
+                  Step {step.step}
+                </p>
+                <h3 className="font-heading text-xl font-semibold text-foreground mb-3">
+                  {step.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
+                  {step.desc}
+                </p>
+              </div>
+            )
+          })}
         </div>
       </div>
     </section>

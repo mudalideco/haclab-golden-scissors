@@ -36,7 +36,7 @@ export function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
         scrolled
-          ? 'bg-[#0A0A0A]/90 backdrop-blur-xl border-b border-[#2A2A2A] shadow-lg shadow-black/20'
+          ? 'bg-background/90 backdrop-blur-xl border-b border-border shadow-lg shadow-black/20'
           : 'bg-transparent'
       }`}
     >
@@ -44,9 +44,9 @@ export function Header() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2 group">
-            <Scissors className="w-5 h-5 text-[#C9A84C] group-hover:rotate-12 transition-transform duration-300" />
-            <span className="font-heading text-xl font-semibold text-[#F5F0E8] tracking-wide">
-              Golden <span className="text-[#C9A84C]">Scissors</span>
+            <Scissors className="w-5 h-5 text-primary group-hover:rotate-12 transition-transform duration-300" />
+            <span className="font-heading text-xl font-semibold text-foreground tracking-wide">
+              Golden <span className="text-primary">Scissors</span>
             </span>
           </a>
 
@@ -56,7 +56,7 @@ export function Header() {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-sm text-[#888888] hover:text-[#C9A84C] transition-colors duration-300 tracking-wide uppercase"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300 tracking-wide uppercase"
               >
                 {link.name}
               </a>
@@ -66,7 +66,7 @@ export function Header() {
                 href="https://wa.me/256703891047?text=Hi%20Ben!%20I'd%20like%20to%20book%20a%20haircut."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#C9A84C] text-[#0A0A0A] px-5 py-2.5 rounded-md text-sm font-semibold hover:bg-[#D4A843] transition-all duration-300 gold-glow"
+                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-md text-sm font-semibold hover:brightness-110 transition-all duration-300 gold-glow"
               >
                 Book Now
               </a>
@@ -76,7 +76,7 @@ export function Header() {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="lg:hidden p-2 text-[#F5F0E8] hover:text-[#C9A84C] transition-colors"
+            className="lg:hidden p-2 text-foreground hover:text-primary transition-colors"
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           >
             {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -86,14 +86,14 @@ export function Header() {
 
       {/* Mobile Menu Overlay */}
       {menuOpen && (
-        <div className="fixed inset-0 top-16 z-50 bg-[#0A0A0A]/98 backdrop-blur-xl lg:hidden animate-fade-in">
+        <div className="fixed inset-0 top-16 z-50 bg-background/98 backdrop-blur-xl lg:hidden animate-fade-in">
           <div className="flex flex-col items-center justify-center gap-8 h-full px-6">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="text-2xl text-[#F5F0E8] hover:text-[#C9A84C] transition-colors duration-300 font-heading"
+                className="text-2xl text-foreground hover:text-primary transition-colors duration-300 font-heading"
               >
                 {link.name}
               </a>
@@ -103,7 +103,7 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
-              className="mt-4 bg-[#C9A84C] text-[#0A0A0A] px-8 py-3 rounded-md text-lg font-semibold hover:bg-[#D4A843] transition-all duration-300 gold-glow"
+              className="mt-4 bg-primary text-primary-foreground px-8 py-3 rounded-md text-lg font-semibold hover:brightness-110 transition-all duration-300 gold-glow"
             >
               Book Now on WhatsApp
             </a>

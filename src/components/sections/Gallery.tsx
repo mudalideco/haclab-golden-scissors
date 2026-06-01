@@ -1,159 +1,207 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-import { X } from 'lucide-react'
-
-gsap.registerPlugin(ScrollTrigger)
+import { useState } from 'react'
+import Image from 'next/image'
+import { X, ChevronLeft, ChevronRight, Grid3x3 } from 'lucide-react'
+import { SplitReveal } from '@/components/primitives/SplitReveal'
 
 const galleryImages = [
   {
-    src: 'https://images.unsplash.com/photo-1596728325488-58c87691e9af?w=500&q=80',
-    alt: 'Precision haircut fade style by Ben Ozzly',
-    span: 'row-span-2',
+    src: 'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?w=600&q=80',
+    alt: 'Precision haircut and fade by Golden Scissors Salon',
+    category: 'Fades',
   },
   {
-    src: 'https://images.unsplash.com/photo-1560869713-7d0a29430803?w=500&q=80',
-    alt: 'Modern taper haircut at Golden Scissors Salon',
-    span: '',
+    src: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=80',
+    alt: 'Professional beard grooming at Golden Scissors',
+    category: 'Beard Grooming',
   },
   {
-    src: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=500&q=80',
-    alt: 'Beard trim and grooming service Jinja',
-    span: '',
+    src: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=80',
+    alt: 'Modern haircut styles by Ben Ozzly',
+    category: 'Styling',
   },
   {
-    src: 'https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=500&q=80',
-    alt: 'Barbershop interior Golden Scissors Salon Main Street Jinja',
-    span: '',
+    src: 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=80',
+    alt: 'Ben Ozzly at work in Golden Scissors Salon Jinja',
+    category: 'Behind the Scenes',
   },
   {
-    src: 'https://images.unsplash.com/photo-1559599101-f09722fb4948?w=500&q=80',
-    alt: 'Professional barber at work in Golden Scissors',
-    span: 'row-span-2',
+    src: 'https://images.unsplash.com/photo-1596728325488-58c87691e9af?w=600&q=80',
+    alt: 'Golden Scissors Salon interior on Main Street Jinja',
+    category: 'Salon',
   },
   {
-    src: 'https://images.unsplash.com/photo-1621607512214-68297480165e?w=500&q=80',
-    alt: 'Hot towel shave experience barber service',
-    span: '',
+    src: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80',
+    alt: 'Hot towel shave service at Golden Scissors',
+    category: 'Shaves',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=600&q=80',
+    alt: 'Professional barber tools and products at Golden Scissors',
+    category: 'Behind the Scenes',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80',
+    alt: 'Styling team at Golden Scissors Salon',
+    category: 'Styling',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?w=600&q=80',
+    alt: 'Creative hair designs by Ben Ozzly',
+    category: 'Fades',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80',
+    alt: 'Salon ambiance at Golden Scissors Main Street',
+    category: 'Salon',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=600&q=80',
+    alt: 'Premium hair wash and conditioning service',
+    category: 'Shaves',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=80',
+    alt: 'Gentleman\'s grooming experience at Golden Scissors',
+    category: 'Beard Grooming',
   },
 ]
 
+const categories = ['All', 'Fades', 'Styling', 'Shaves', 'Beard Grooming', 'Behind the Scenes', 'Salon']
+
 export function Gallery() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const [lightboxOpen, setLightboxOpen] = useState(false)
-  const [lightboxIndex, setLightboxIndex] = useState(0)
+  const [activeCategory, setActiveCategory] = useState('All')
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.gallery-item',
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power4.out', scrollTrigger: { trigger: '.gallery-grid', start: 'top 85%', once: true } }
-      )
-    }, sectionRef)
-    return () => ctx.revert()
-  }, [])
+  const filtered =
+    activeCategory === 'All'
+      ? galleryImages
+      : galleryImages.filter((img) => img.category === activeCategory)
 
-  useEffect(() => {
-    if (lightboxOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
+  const openLightbox = (index: number) => setLightboxIndex(index)
+  const closeLightbox = () => setLightboxIndex(null)
+
+  const goNext = () => {
+    if (lightboxIndex !== null) {
+      setLightboxIndex((lightboxIndex + 1) % filtered.length)
     }
-    return () => { document.body.style.overflow = '' }
-  }, [lightboxOpen])
-
-  const openLightbox = (index: number) => {
-    setLightboxIndex(index)
-    setLightboxOpen(true)
   }
 
-  const closeLightbox = () => {
-    setLightboxOpen(false)
+  const goPrev = () => {
+    if (lightboxIndex !== null) {
+      setLightboxIndex((lightboxIndex - 1 + filtered.length) % filtered.length)
+    }
   }
 
   return (
-    <section id="gallery" ref={sectionRef} className="py-20 lg:py-28 bg-[#0A0A0A]">
+    <section id="gallery" className="relative py-24 lg:py-32 bg-surface">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-[#C9A84C] text-sm tracking-[0.2em] uppercase font-accent mb-4">
-            Portfolio
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <p className="text-[10px] text-primary font-accent tracking-[0.25em] uppercase mb-4">
+            Our Work
           </p>
-          <h2 className="font-heading text-[clamp(2rem,4vw,3.2rem)] font-bold text-[#F5F0E8] leading-tight">
-            See the{' '}
-            <span className="text-[#C9A84C]">Craft</span>
-          </h2>
+          <SplitReveal
+            as="h2"
+            type="words"
+            stagger={0.04}
+            duration={0.8}
+            ease="power3.out"
+            className="font-heading text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-foreground"
+          >
+            See the Craft
+          </SplitReveal>
         </div>
 
-        {/* Masonry Grid */}
-        <div className="gallery-grid grid grid-cols-2 md:grid-cols-3 gap-4">
-          {galleryImages.map((img, i) => (
-            <div
-              key={i}
-              className={`gallery-item opacity-0 relative rounded-xl overflow-hidden cursor-pointer group ${img.span}`}
-              onClick={() => openLightbox(i)}
+        {/* Category Filters */}
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-4 py-2 rounded-full text-xs font-accent tracking-wider uppercase transition-all duration-300 ${
+                activeCategory === cat
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-background text-muted-foreground border border-border hover:border-primary/40 hover:text-primary'
+              }`}
             >
-              <img
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Gallery Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          {filtered.map((img, idx) => (
+            <button
+              key={idx}
+              onClick={() => openLightbox(idx)}
+              className="group relative aspect-square rounded-lg overflow-hidden bg-background border border-border hover:border-primary/40 transition-all duration-300"
+            >
+              <Image
                 src={img.src}
                 alt={img.alt}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                style={{ minHeight: img.span ? '400px' : '200px' }}
+                fill
+                className="object-cover transition-all duration-500 group-hover:scale-110"
+                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
               />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center">
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="w-12 h-12 rounded-full border-2 border-white/60 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                  </div>
-                </div>
+              {/* Overlay on hover */}
+              <div className="absolute inset-0 bg-background/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <Grid3x3 className="w-6 h-6 text-primary" />
               </div>
-              {/* Gold border on hover */}
-              <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#C9A84C]/50 rounded-xl transition-all duration-500" />
-            </div>
+              {/* Category tag */}
+              <div className="absolute bottom-2 left-2 bg-background/80 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] text-primary font-accent tracking-wider uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {img.category}
+              </div>
+            </button>
           ))}
         </div>
       </div>
 
       {/* Lightbox */}
-      {lightboxOpen && (
-        <div
-          className="fixed inset-0 z-[999] bg-black/95 flex items-center justify-center p-4 animate-fade-in"
-          onClick={closeLightbox}
-        >
+      {lightboxIndex !== null && (
+        <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-xl flex items-center justify-center">
           <button
             onClick={closeLightbox}
-            className="absolute top-6 right-6 text-white/80 hover:text-white transition-colors"
+            className="absolute top-4 right-4 p-2 text-foreground hover:text-primary transition-colors z-10"
             aria-label="Close lightbox"
           >
             <X className="w-8 h-8" />
           </button>
 
-          <div className="max-w-4xl max-h-[85vh]" onClick={(e) => e.stopPropagation()}>
-            <img
-              src={galleryImages[lightboxIndex].src}
-              alt={galleryImages[lightboxIndex].alt}
-              className="w-full h-full object-contain rounded-lg"
-            />
+          <button
+            onClick={goPrev}
+            className="absolute left-4 p-2 text-foreground hover:text-primary transition-colors z-10"
+            aria-label="Previous image"
+          >
+            <ChevronLeft className="w-8 h-8" />
+          </button>
 
-            {/* Navigation */}
-            <div className="flex justify-center gap-4 mt-4">
-              <button
-                onClick={() => setLightboxIndex((prev) => (prev === 0 ? galleryImages.length - 1 : prev - 1))}
-                className="text-white/60 hover:text-white text-sm transition-colors"
-              >
-                ← Previous
-              </button>
-              <span className="text-white/40 text-sm">{lightboxIndex + 1} / {galleryImages.length}</span>
-              <button
-                onClick={() => setLightboxIndex((prev) => (prev === galleryImages.length - 1 ? 0 : prev + 1))}
-                className="text-white/60 hover:text-white text-sm transition-colors"
-              >
-                Next →
-              </button>
-            </div>
+          <button
+            onClick={goNext}
+            className="absolute right-4 p-2 text-foreground hover:text-primary transition-colors z-10"
+            aria-label="Next image"
+          >
+            <ChevronRight className="w-8 h-8" />
+          </button>
+
+          <div className="relative max-w-4xl max-h-[85vh] w-full h-full mx-4">
+            <Image
+              src={filtered[lightboxIndex].src}
+              alt={filtered[lightboxIndex].alt}
+              fill
+              className="object-contain"
+              sizes="(max-width: 768px) 100vw, 80vw"
+              priority
+            />
+          </div>
+
+          {/* Image counter */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full border border-border">
+            <p className="text-sm text-muted-foreground">
+              {lightboxIndex + 1} / {filtered.length}
+            </p>
           </div>
         </div>
       )}

@@ -1,93 +1,92 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { ChevronDown } from 'lucide-react'
+import { SplitReveal } from '@/components/primitives/SplitReveal'
 
-interface FAQItem {
-  question: string
-  answer: string
-}
-
-const faqs: FAQItem[] = [
+const faqs = [
   {
-    question: 'How can I book an appointment?',
-    answer: 'Just tap the "Book Now" button on our site — it opens WhatsApp directly. Tell Ben your preferred time and service, and he\'ll confirm. Easy as that.',
+    q: 'How do I book an appointment?',
+    a: 'Simply message us on WhatsApp at +256 703 891 047. Tell us your preferred service, date, and time, and Ben will confirm right away.',
   },
   {
-    question: 'What types of fades can you do?',
-    answer: 'Ben specializes in all types of fades — low, mid, high, taper, skin, and burst fades. Bring a reference photo or describe your style, and he\'ll make it happen.',
+    q: 'Do you accept walk-ins?',
+    a: 'While we do accept walk-ins, we highly recommend booking ahead — especially on weekends — to avoid waiting.',
   },
   {
-    question: 'Is hair washing included?',
-    answer: 'Yes! Every cut at Golden Scissors starts with a fresh wash. It\'s part of our commitment to cleanliness and giving you the best cut possible.',
+    q: 'What payment methods do you accept?',
+    a: 'We accept cash, Mobile Money (MTN & Airtel), and bank transfers. All prices are in UGX.',
   },
   {
-    question: 'Do you offer home services?',
-    answer: 'Currently, all services are provided at our salon on Plot 3B Main Street, Jinja. Walk-ins are welcome, but booking ahead is recommended.',
+    q: 'How long does a haircut take?',
+    a: 'A standard haircut takes 30-45 minutes. A skin fade or hot towel shave may take up to an hour for the full experience.',
   },
   {
-    question: 'What are your opening hours?',
-    answer: 'We\'re open Monday to Saturday from 8:00 AM to 8:00 PM, and Sunday from 10:00 AM to 6:00 PM.',
+    q: 'What if I don\'t like my haircut?',
+    a: 'We offer free adjustments within 3 days. Just send us a message and we\'ll get you sorted.',
   },
   {
-    question: 'Where is your salon located?',
-    answer: 'We\'re at Plot 3B Main Street, Jinja, Uganda — right in the heart of downtown. Easy to find, with plenty of street parking nearby.',
-  },
-  {
-    question: 'Are your tools sanitized?',
-    answer: 'Absolutely. Every tool is sterilized before each client. We use hospital-grade disinfectants and fresh towels for every service.',
-  },
-  {
-    question: 'Do you offer piercings?',
-    answer: 'Yes, we offer professional piercing services at 30,000 UGX. All equipment is sterilized and single-use needles are used for safety.',
+    q: 'Do you cut children\'s hair?',
+    a: 'Yes! We love our younger clients. Kids\' haircuts start at UGX 15,000. We make it a fun and comfortable experience.',
   },
 ]
 
 export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
-
-  const toggle = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index)
-  }
+  const sectionRef = useRef<HTMLElement>(null)
 
   return (
-    <section className="py-20 lg:py-28 bg-[#0A0A0A]" id="faq">
+    <section
+      ref={sectionRef}
+      className="py-24 lg:py-32 bg-background"
+    >
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <p className="text-[#C9A84C] text-sm tracking-[0.2em] uppercase font-accent mb-4">
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <p className="text-[10px] text-primary font-accent tracking-[0.25em] uppercase mb-4">
             FAQ
           </p>
-          <h2 className="font-heading text-[clamp(2rem,4vw,3.2rem)] font-bold text-[#F5F0E8] leading-tight">
-            Got{' '}
-            <span className="text-[#C9A84C]">Questions?</span>
-          </h2>
+          <SplitReveal
+            as="h2"
+            type="words"
+            stagger={0.04}
+            duration={0.8}
+            ease="power3.out"
+            className="font-heading text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-foreground"
+          >
+            Common Questions
+          </SplitReveal>
         </div>
 
+        {/* FAQ Items */}
         <div className="space-y-3">
           {faqs.map((faq, i) => (
             <div
               key={i}
-              className="bg-[#141414] border border-[#2A2A2A] rounded-xl overflow-hidden transition-all duration-300 hover:border-[#C9A84C]/20"
+              className={`bg-surface border ${
+                openIndex === i ? 'border-primary/40' : 'border-border'
+              } rounded-xl overflow-hidden transition-all duration-300`}
             >
               <button
-                onClick={() => toggle(i)}
-                className="w-full flex items-center justify-between px-6 py-4 text-left transition-colors"
-                aria-expanded={openIndex === i}
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                className="w-full flex items-center justify-between p-5 text-left"
               >
-                <span className="text-sm font-medium text-[#F5F0E8] pr-4">{faq.question}</span>
+                <span className="text-base font-medium text-foreground pr-4">
+                  {faq.q}
+                </span>
                 <ChevronDown
-                  className={`w-4 h-4 text-[#C9A84C] flex-shrink-0 transition-transform duration-300 ${
+                  className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
                     openIndex === i ? 'rotate-180' : ''
                   }`}
                 />
               </button>
               <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                  openIndex === i ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                className={`overflow-hidden transition-all duration-300 ${
+                  openIndex === i ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
                 }`}
               >
-                <p className="px-6 pb-4 text-sm text-[#888888] leading-relaxed">
-                  {faq.answer}
+                <p className="px-5 pb-5 text-muted-foreground leading-relaxed text-sm">
+                  {faq.a}
                 </p>
               </div>
             </div>

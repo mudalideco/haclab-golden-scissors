@@ -1,85 +1,86 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-import { Scissors, Sparkles, Star, ShieldCheck, MapPin, MessageSquare } from 'lucide-react'
+import { useRef } from 'react'
+import { Award, Clock, Sparkles, Shield, ThumbsUp, Zap } from 'lucide-react'
+import { SplitReveal } from '@/components/primitives/SplitReveal'
 
-gsap.registerPlugin(ScrollTrigger)
-
-const differentiators = [
+const reasons = [
+  {
+    icon: Award,
+    title: '5+ Years Experience',
+    desc: 'Ben Ozzly brings years of mastery to every cut — not just hair, but craft.',
+  },
   {
     icon: Sparkles,
     title: 'Premium Products',
-    description: 'Quality products for every hair type — we use only the best.',
+    desc: 'We use only professional-grade products for healthier hair and a polished finish.',
   },
   {
-    icon: Scissors,
-    title: 'Precision Craft',
-    description: 'Every cut is custom, not template. Your style, your rules.',
+    icon: Clock,
+    title: 'No Waiting',
+    desc: 'Book via WhatsApp and get seen at your exact appointment time. Your time matters.',
   },
   {
-    icon: Star,
-    title: 'Classic Meets Modern',
-    description: 'Traditional barbering techniques blended with modern styles.',
+    icon: Shield,
+    title: 'Hygiene First',
+    desc: 'Every station is sterilized after each client. Your safety is non-negotiable.',
   },
   {
-    icon: ShieldCheck,
-    title: 'Sanitized Tools',
-    description: 'Every tool is cleaned and sterilized before each client.',
+    icon: ThumbsUp,
+    title: 'Satisfaction Guaranteed',
+    desc: 'Not happy with your cut? We\'ll fix it on the spot, no questions asked.',
   },
   {
-    icon: MapPin,
-    title: 'Main Street Location',
-    description: 'Easy to find in the heart of Jinja. Walk-ins welcome.',
-  },
-  {
-    icon: MessageSquare,
-    title: 'WhatsApp Booking',
-    description: 'Book in seconds — no phone calls needed. Just tap and chat.',
+    icon: Zap,
+    title: 'Quick & Efficient',
+    desc: 'In and out in 30-45 minutes without compromising quality. We respect your schedule.',
   },
 ]
 
 export function WhyUs() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.why-card',
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power4.out', scrollTrigger: { trigger: '.why-grid', start: 'top 80%', once: true } }
-      )
-    }, sectionRef)
-    return () => ctx.revert()
-  }, [])
+  const sectionRef = useRef<HTMLElement>(null)
 
   return (
-    <section ref={sectionRef} className="py-20 lg:py-28 bg-[#0A0A0A]">
+    <section
+      ref={sectionRef}
+      className="py-24 lg:py-32 bg-surface"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-[#C9A84C] text-sm tracking-[0.2em] uppercase font-accent mb-4">
+          <p className="text-[10px] text-primary font-accent tracking-[0.25em] uppercase mb-4">
             Why Golden Scissors
           </p>
-          <h2 className="font-heading text-[clamp(2rem,4vw,3.2rem)] font-bold text-[#F5F0E8] leading-tight">
-            Why Choose{' '}
-            <span className="text-[#C9A84C]">Us</span>
-          </h2>
+          <SplitReveal
+            as="h2"
+            type="words"
+            stagger={0.04}
+            duration={0.8}
+            ease="power3.out"
+            className="font-heading text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-foreground"
+          >
+            Why Choose Us
+          </SplitReveal>
         </div>
 
-        <div className="why-grid grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {differentiators.map((item, i) => {
-            const Icon = item.icon
+        {/* Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {reasons.map((r, i) => {
+            const Icon = r.icon
             return (
               <div
                 key={i}
-                className="why-card opacity-0 bg-[#141414] border border-[#2A2A2A] rounded-xl p-6 hover:border-[#C9A84C]/20 hover:bg-[#1A1A1A] transition-all duration-500 group"
+                className="bg-background border border-border rounded-xl p-6 hover:border-primary/30 transition-all duration-300 group"
               >
-                <div className="w-12 h-12 rounded-lg bg-[#C9A84C]/10 flex items-center justify-center mb-5 group-hover:bg-[#C9A84C]/20 transition-colors duration-300">
-                  <Icon className="w-5 h-5 text-[#C9A84C]" />
+                <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-all duration-300">
+                  <Icon className="w-5 h-5 text-primary" />
                 </div>
-                <h3 className="font-heading text-lg font-semibold text-[#F5F0E8] mb-2">{item.title}</h3>
-                <p className="text-sm text-[#888888] leading-relaxed">{item.description}</p>
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">
+                  {r.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {r.desc}
+                </p>
               </div>
             )
           })}

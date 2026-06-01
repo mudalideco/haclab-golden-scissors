@@ -1,66 +1,61 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-import { Scissors } from 'lucide-react'
+import { useRef } from 'react'
+import { MessageSquare } from 'lucide-react'
+import { SplitReveal } from '@/components/primitives/SplitReveal'
 import { MagneticButton } from '@/components/primitives/MagneticButton'
 
-gsap.registerPlugin(ScrollTrigger)
-
 export function FinalCTA() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.cta-final-content',
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1, ease: 'power4.out', scrollTrigger: { trigger: '.cta-final-content', start: 'top 80%', once: true } }
-      )
-    }, sectionRef)
-    return () => ctx.revert()
-  }, [])
+  const sectionRef = useRef<HTMLElement>(null)
 
   return (
-    <section ref={sectionRef} className="relative py-28 lg:py-36 overflow-hidden bg-[#0A0A0A]">
-      {/* Glow effect */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(201,168,76,0.08)_0%,transparent_70%)]" />
+    <section
+      ref={sectionRef}
+      className="relative py-24 lg:py-32 overflow-hidden"
+    >
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-surface to-background" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,168,76,0.06)_0%,transparent_70%)]" />
 
-      <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-        <div className="cta-final-content opacity-0">
-          {/* Decorative scissor divider */}
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#C9A84C]/50" />
-            <Scissors className="w-5 h-5 text-[#C9A84C] rotate-[-45deg]" />
-            <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#C9A84C]/50" />
-          </div>
+      {/* Gold accent lines */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
-          <h2 className="font-heading text-[clamp(2.5rem,6vw,4.5rem)] font-bold text-[#F5F0E8] leading-[1.05] mb-6">
-            Ready for a{' '}
-            <span className="text-[#C9A84C]">Fresh Look?</span>
-          </h2>
+      <div className="relative z-10 mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+        <SplitReveal
+          as="h2"
+          type="words"
+          stagger={0.05}
+          duration={0.9}
+          ease="power3.out"
+          className="font-heading text-[clamp(2.2rem,5vw,4rem)] font-bold leading-tight text-foreground"
+        >
+          Ready to Look Your Best?
+        </SplitReveal>
 
-          <p className="text-lg text-[#888888] max-w-lg mx-auto mb-10">
-            Book your appointment in seconds on WhatsApp. Ben is ready when you are.
-          </p>
+        <p className="mt-6 text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+          Your perfect cut is one message away. Book your appointment at
+          Golden Scissors Salon and walk out looking and feeling your absolute best.
+        </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <MagneticButton>
-              <a
-                href="https://wa.me/256703891047?text=Hi%20Ben!%20I'd%20like%20to%20book%20a%20haircut."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#C9A84C] text-[#0A0A0A] px-10 py-4 rounded-md text-lg font-semibold hover:bg-[#D4A843] transition-all duration-300 gold-glow"
-              >
-                Book Now on WhatsApp
-              </a>
-            </MagneticButton>
-          </div>
-
-          <p className="text-sm text-[#555555] mt-6">
-            Or visit us at Plot 3B Main Street, Jinja
-          </p>
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <MagneticButton>
+            <a
+              href="https://wa.me/256703891047?text=Hi%20Ben!%20I'd%20like%20to%20book%20a%20haircut."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 rounded-md text-base font-semibold hover:brightness-110 transition-all duration-300 gold-glow"
+            >
+              <MessageSquare className="w-5 h-5" />
+              Book on WhatsApp
+            </a>
+          </MagneticButton>
+          <a
+            href="tel:+256703891047"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-md text-base font-medium text-foreground border border-border hover:border-primary/50 hover:text-primary transition-all duration-300"
+          >
+            Call +256 703 891 047
+          </a>
         </div>
       </div>
     </section>

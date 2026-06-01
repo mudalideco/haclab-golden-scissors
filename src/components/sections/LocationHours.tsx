@@ -1,105 +1,141 @@
 'use client'
 
-import { MapPin, Clock, Phone } from 'lucide-react'
-import dynamic from 'next/dynamic'
-
-const MapEmbed = dynamic(
-  () => import('@/components/sections/MapEmbed'),
-  {
-    loading: () => (
-      <div className="h-full min-h-[300px] bg-[#1A1A1A] rounded-xl flex items-center justify-center">
-        <div className="w-6 h-6 border-2 border-[#C9A84C] border-t-transparent rounded-full animate-spin" />
-      </div>
-    ),
-    ssr: false,
-  }
-)
+import { useRef } from 'react'
+import { MapPin, Clock, Phone, Calendar } from 'lucide-react'
+import { SplitReveal } from '@/components/primitives/SplitReveal'
+import { MagneticButton } from '@/components/primitives/MagneticButton'
 
 export function LocationHours() {
+  const sectionRef = useRef<HTMLElement>(null)
+
   return (
-    <section id="location" className="py-20 lg:py-28 bg-[#141414]">
+    <section
+      id="location"
+      ref={sectionRef}
+      className="py-24 lg:py-32 bg-surface"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <p className="text-[#C9A84C] text-sm tracking-[0.2em] uppercase font-accent mb-4">
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <p className="text-[10px] text-primary font-accent tracking-[0.25em] uppercase mb-4">
             Visit Us
           </p>
-          <h2 className="font-heading text-[clamp(2rem,4vw,3.2rem)] font-bold text-[#F5F0E8] leading-tight">
-            Location &{' '}
-            <span className="text-[#C9A84C]">Hours</span>
-          </h2>
+          <SplitReveal
+            as="h2"
+            type="words"
+            stagger={0.04}
+            duration={0.8}
+            ease="power3.out"
+            className="font-heading text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-foreground"
+          >
+            Find Golden Scissors
+          </SplitReveal>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 items-stretch">
-          {/* Info Side */}
-          <div className="space-y-8">
-            {/* Address */}
-            <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-lg bg-[#C9A84C]/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-5 h-5 text-[#C9A84C]" />
-                </div>
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* Map / Location Card */}
+          <div className="bg-background border border-border rounded-xl overflow-hidden">
+            {/* Map area */}
+            <div className="aspect-[16/9] bg-surface relative overflow-hidden">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.654!2d33.2025!3d0.4392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMMKwMjYnMjEuMiJOIDMzwrAxMiw5MC4wIkU!5e0!3m2!1sen!2sug!4v1"
+                width="100%"
+                height="100%"
+                style={{ border: 0, filter: 'invert(0.9) hue-rotate(180deg)' }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Golden Scissors Salon location on Main Street, Jinja"
+                className="absolute inset-0 w-full h-full"
+              />
+            </div>
+            <div className="p-6">
+              <div className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="text-[#F5F0E8] font-medium mb-1">Address</h3>
-                  <p className="text-sm text-[#888888]">Plot 3B Main Street</p>
-                  <p className="text-sm text-[#888888]">Jinja, Uganda</p>
-                  <p className="text-xs text-[#C9A84C] mt-2">Downtown Jinja, Main Street</p>
+                  <h3 className="font-heading text-lg font-semibold text-foreground">
+                    Golden Scissors Salon
+                  </h3>
+                  <p className="text-muted-foreground mt-1">
+                    Main Street, Opposite Centenary Park
+                    <br />
+                    Jinja, Uganda
+                  </p>
                 </div>
               </div>
             </div>
+          </div>
 
+          {/* Info Cards */}
+          <div className="space-y-5">
             {/* Hours */}
-            <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-lg bg-[#C9A84C]/10 flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-5 h-5 text-[#C9A84C]" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-[#F5F0E8] font-medium mb-3">Opening Hours</h3>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-[#888888]">Monday – Saturday</span>
-                      <span className="text-[#F5F0E8]">8:00 AM – 8:00 PM</span>
-                    </div>
-                    <div className="border-t border-[#2A2A2A] my-2" />
-                    <div className="flex justify-between text-sm">
-                      <span className="text-[#888888]">Sunday</span>
-                      <span className="text-[#F5F0E8]">10:00 AM – 6:00 PM</span>
-                    </div>
+            <div className="bg-background border border-border rounded-xl p-6 flex items-start gap-4">
+              <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                <Clock className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-heading text-base font-semibold text-foreground mb-2">
+                  Opening Hours
+                </h3>
+                <div className="space-y-1 text-sm text-muted-foreground">
+                  <div className="flex justify-between">
+                    <span>Monday — Saturday</span>
+                    <span className="text-foreground">8:00 AM — 7:00 PM</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Sunday</span>
+                    <span className="text-foreground">10:00 AM — 5:00 PM</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Public Holidays</span>
+                    <span className="text-foreground">10:00 AM — 4:00 PM</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Phone */}
-            <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-lg bg-[#C9A84C]/10 flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-5 h-5 text-[#C9A84C]" />
-                </div>
-                <div>
-                  <h3 className="text-[#F5F0E8] font-medium mb-1">Call Us</h3>
-                  <a href="tel:+256703891047" className="text-sm text-[#C9A84C] hover:text-[#D4A843] transition-colors">
-                    +256 703 891047
-                  </a>
-                </div>
+            <div className="bg-background border border-border rounded-xl p-6 flex items-start gap-4">
+              <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                <Phone className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-heading text-base font-semibold text-foreground mb-1">
+                  Call or WhatsApp
+                </h3>
+                <a
+                  href="tel:+256703891047"
+                  className="text-primary hover:underline text-sm"
+                >
+                  +256 703 891 047
+                </a>
               </div>
             </div>
 
-            {/* Get Directions */}
-            <a
-              href="https://maps.google.com/?q=Plot+3B+Main+Street+Jinja+Uganda"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#C9A84C] text-[#0A0A0A] px-6 py-3 rounded-md text-sm font-semibold hover:bg-[#D4A843] transition-all duration-300"
-            >
-              <MapPin className="w-4 h-4" />
-              Get Directions
-            </a>
-          </div>
-
-          {/* Map Side */}
-          <div className="min-h-[400px] rounded-xl overflow-hidden border border-[#2A2A2A]">
-            <MapEmbed />
+            {/* Booking CTA */}
+            <div className="bg-background border border-primary/30 rounded-xl p-6 flex items-start gap-4">
+              <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                <Calendar className="w-5 h-5 text-primary" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-heading text-base font-semibold text-foreground mb-1">
+                  Ready for a Fresh Look?
+                </h3>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Book your appointment in under 30 seconds.
+                </p>
+                <MagneticButton>
+                  <a
+                    href="https://wa.me/256703891047?text=Hi%20Ben!%20I'd%20like%20to%20book%20a%20haircut."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-md text-sm font-semibold hover:brightness-110 transition-all duration-300 gold-glow"
+                  >
+                    Book Now
+                  </a>
+                </MagneticButton>
+              </div>
+            </div>
           </div>
         </div>
       </div>

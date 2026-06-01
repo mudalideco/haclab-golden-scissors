@@ -1,122 +1,140 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-import { Scissors, Star, Sparkles } from 'lucide-react'
+import { useRef } from 'react'
+import { Scissors, Sparkles, User, Award, Sun, Star } from 'lucide-react'
+import { SplitReveal } from '@/components/primitives/SplitReveal'
+import { MagneticButton } from '@/components/primitives/MagneticButton'
 
-gsap.registerPlugin(ScrollTrigger)
-
-interface Service {
-  title: string
-  price: string
-  description: string
-  icon: typeof Scissors
-  popular?: boolean
-  waMessage: string
-}
-
-const services: Service[] = [
+const services = [
   {
-    title: 'Clippers Only',
-    price: '30,000 UGX',
-    description: 'Full head clipper cut for a clean, sharp look. Quick, precise, and fresh.',
     icon: Scissors,
-    waMessage: "Hi%20Ben!%20I'd%20like%20to%20book%20a%20Clippers%20Only%20cut%20(30%2C000%20UGX).",
+    name: 'Premium Haircut',
+    desc: 'Precision scissor & clipper cut tailored to your face shape and style preference.',
+    price: 'UGX 25,000',
+    popular: false,
   },
   {
-    title: 'Clippers on Sides',
-    price: '20,000 UGX',
-    description: 'Precision fade on the sides for a fresh, defined style. Perfect for maintaining your look.',
-    icon: Sparkles,
-    waMessage: "Hi%20Ben!%20I'd%20like%20to%20book%20a%20Clippers%20on%20Sides%20cut%20(20%2C000%20UGX).",
-  },
-  {
-    title: 'Clippers & Scissors',
-    price: '40,000 UGX',
-    description: 'The full experience — clippers and scissors for the perfect cut. Our most popular service.',
-    icon: Star,
+    icon: User,
+    name: 'Skin Fade',
+    desc: 'The signature Golden Scissors fade — seamless, sharp, and built to impress.',
+    price: 'UGX 35,000',
     popular: true,
-    waMessage: "Hi%20Ben!%20I'd%20like%20to%20book%20the%20full%20Clippers%20%26%20Scissors%20experience%20(40%2C000%20UGX).",
   },
   {
-    title: 'Piercing',
-    price: '30,000 UGX',
-    description: 'Quick and safe piercing with a professional piercing gun. Fresh and clean.',
+    icon: Award,
+    name: 'Hot Towel Shave',
+    desc: 'A classic straight-razor shave with hot towels, pre-shave oil, and aftershave balm.',
+    price: 'UGX 30,000',
+    popular: false,
+  },
+  {
+    icon: Sun,
+    name: 'Beard Grooming',
+    desc: 'Shape-up, line-up, and conditioning — your beard deserves the best treatment.',
+    price: 'UGX 20,000',
+    popular: false,
+  },
+  {
+    icon: Sparkles,
+    name: 'Hair Styling',
+    desc: 'Professional styling for events, photoshoots, or everyday fresh looks.',
+    price: 'UGX 20,000',
+    popular: false,
+  },
+  {
     icon: Star,
-    waMessage: "Hi%20Ben!%20I'd%20like%20to%20book%20a%20piercing%20(30%2C000%20UGX).",
+    name: 'Kid\'s Haircut',
+    desc: 'Patient, friendly cuts for children — making haircuts fun for the little ones.',
+    price: 'UGX 15,000',
+    popular: false,
   },
 ]
 
 export function ServicesMenu() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.service-card',
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'power4.out', scrollTrigger: { trigger: '.services-grid', start: 'top 80%', once: true } }
-      )
-    }, sectionRef)
-    return () => ctx.revert()
-  }, [])
+  const sectionRef = useRef<HTMLElement>(null)
 
   return (
-    <section id="services" ref={sectionRef} className="py-20 lg:py-28 bg-[#0A0A0A]">
+    <section
+      id="services"
+      ref={sectionRef}
+      className="relative py-24 lg:py-32 bg-surface"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-[#C9A84C] text-sm tracking-[0.2em] uppercase font-accent mb-4">
+          <p className="text-[10px] text-primary font-accent tracking-[0.25em] uppercase mb-4">
             Our Services
           </p>
-          <h2 className="font-heading text-[clamp(2rem,4vw,3.2rem)] font-bold text-[#F5F0E8] leading-tight">
-            Premium Cuts,{' '}
-            <span className="text-[#C9A84C]">Fair Prices</span>
-          </h2>
+          <SplitReveal
+            as="h2"
+            type="words"
+            stagger={0.04}
+            duration={0.8}
+            ease="power3.out"
+            className="font-heading text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-foreground"
+          >
+            Premium Grooming, Every Time
+          </SplitReveal>
+          <p className="mt-4 text-muted-foreground leading-relaxed">
+            Every service is performed with precision, care, and the highest quality
+            products — because you deserve nothing less.
+          </p>
         </div>
 
         {/* Services Grid */}
-        <div className="services-grid grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {services.map((service, i) => {
             const Icon = service.icon
             return (
               <div
                 key={i}
-                className={`service-card opacity-0 group relative rounded-xl border ${
+                className={`group relative bg-background border ${
                   service.popular
-                    ? 'border-[#C9A84C] bg-[#1A1A1A] shadow-lg shadow-[#C9A84C]/10'
-                    : 'border-[#2A2A2A] bg-[#141414] hover:border-[#C9A84C]/30'
-                } p-6 transition-all duration-500 hover:translate-y-[-4px]`}
+                    ? 'border-primary/40'
+                    : 'border-border hover:border-primary/30'
+                } rounded-xl p-6 sm:p-8 transition-all duration-500 hover:-translate-y-1`}
               >
+                {/* Popular Badge */}
                 {service.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#C9A84C] text-[#0A0A0A] text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded-full">
-                    Popular
+                  <div className="absolute -top-3 left-6 bg-primary text-primary-foreground px-3 py-1 rounded-full text-[10px] font-accent tracking-wider uppercase">
+                    Most Popular
                   </div>
                 )}
-                <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-5 ${
-                  service.popular ? 'bg-[#C9A84C]/20' : 'bg-[#1A1A1A]'
-                } group-hover:bg-[#C9A84C]/20 transition-colors duration-300`}>
-                  <Icon className={`w-5 h-5 ${service.popular ? 'text-[#C9A84C]' : 'text-[#888888] group-hover:text-[#C9A84C]'} transition-colors duration-300`} />
+
+                {/* Icon */}
+                <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-all duration-300">
+                  <Icon className="w-5 h-5 text-primary" />
                 </div>
-                <h3 className="font-heading text-lg font-semibold text-[#F5F0E8] mb-1">{service.title}</h3>
-                <p className="text-[#C9A84C] font-bold text-xl mb-3">{service.price}</p>
-                <p className="text-sm text-[#888888] leading-relaxed mb-6">{service.description}</p>
-                <a
-                  href={`https://wa.me/256703891047?text=${service.waMessage}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-2 text-sm font-medium transition-colors duration-300 ${
-                    service.popular
-                      ? 'text-[#C9A84C] hover:text-[#D4A843]'
-                      : 'text-[#888888] hover:text-[#C9A84C]'
-                  }`}
-                >
-                  Book Now →
-                </a>
+
+                {/* Service Name */}
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">
+                  {service.name}
+                </h3>
+
+                {/* Description */}
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  {service.desc}
+                </p>
+
+                {/* Price */}
+                <p className="text-primary font-heading text-xl font-bold">{service.price}</p>
               </div>
             )
           })}
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="mt-12 text-center">
+          <MagneticButton>
+            <a
+              href="https://wa.me/256703891047?text=Hi%20Ben!%20I'd%20like%20to%20book%20a%20haircut."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 rounded-md text-base font-semibold hover:brightness-110 transition-all duration-300 gold-glow"
+            >
+              Book Your Appointment
+            </a>
+          </MagneticButton>
         </div>
       </div>
     </section>

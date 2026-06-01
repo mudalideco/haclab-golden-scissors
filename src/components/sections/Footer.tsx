@@ -1,72 +1,104 @@
-import { Scissors, MapPin, Phone, Clock } from 'lucide-react'
-import { SiInstagram, SiFacebook, SiWhatsapp } from '@icons-pack/react-simple-icons'
+import { Scissors, MapPin, Phone, Clock, MessageSquare } from 'lucide-react'
+import { FaInstagram, FaFacebook } from 'react-icons/fa6'
+
+const footerLinks = {
+  services: [
+    { name: 'Premium Haircut', href: '#services' },
+    { name: 'Skin Fade', href: '#services' },
+    { name: 'Hot Towel Shave', href: '#services' },
+    { name: 'Beard Grooming', href: '#services' },
+  ],
+  quickLinks: [
+    { name: 'Gallery', href: '#gallery' },
+    { name: 'About', href: '#about' },
+    { name: 'Location', href: '#location' },
+    { name: 'FAQ', href: '#faq' },
+  ],
+}
 
 export function Footer() {
   return (
-    <footer className="bg-[#0A0A0A] border-t border-[#2A2A2A]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Main Footer */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 py-16">
-          {/* Brand */}
+    <footer className="bg-background border-t border-border">
+      {/* Main Footer */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+          {/* Brand Column */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <a href="#" className="flex items-center gap-2 mb-4">
-              <Scissors className="w-5 h-5 text-[#C9A84C]" />
-              <span className="font-heading text-xl font-semibold text-[#F5F0E8] tracking-wide">
-                Golden <span className="text-[#C9A84C]">Scissors</span>
+            <a href="#" className="inline-flex items-center gap-2 group mb-4">
+              <Scissors className="w-5 h-5 text-primary group-hover:rotate-12 transition-transform duration-300" />
+              <span className="font-heading text-xl font-semibold text-foreground tracking-wide">
+                Golden <span className="text-primary">Scissors</span>
               </span>
             </a>
-            <p className="text-sm text-[#888888] leading-relaxed mb-4">
-              Precision cuts, perfect fades.
-            </p>
-            <p className="text-xs text-[#555555]">
-              Jinja&apos;s premier barbershop — master barber Ben Ozzly.
+            <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+              Jinja&apos;s premier barber shop. Precision cuts, flawless fades, and
+              premium grooming since 2020.
             </p>
 
-            {/* Social Links */}
-            <div className="flex gap-3 mt-6">
-              <a
-                href="https://instagram.com/benozzly"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-[#1A1A1A] border border-[#2A2A2A] flex items-center justify-center hover:border-[#C9A84C]/30 hover:bg-[#C9A84C]/10 transition-all duration-300 group"
-                aria-label="Instagram @benozzly"
-              >
-                <SiInstagram className="w-4 h-4 text-[#888888] group-hover:text-[#C9A84C] transition-colors" />
-              </a>
-              <a
-                href="https://facebook.com/GoldenScissorsSalon"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-[#1A1A1A] border border-[#2A2A2A] flex items-center justify-center hover:border-[#C9A84C]/30 hover:bg-[#C9A84C]/10 transition-all duration-300 group"
-                aria-label="Facebook Golden Scissors Salon"
-              >
-                <SiFacebook className="w-4 h-4 text-[#888888] group-hover:text-[#C9A84C] transition-colors" />
-              </a>
+            {/* Social Icons */}
+            <div className="flex items-center gap-3">
               <a
                 href="https://wa.me/256703891047"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-[#1A1A1A] border border-[#2A2A2A] flex items-center justify-center hover:border-[#C9A84C]/30 hover:bg-[#C9A84C]/10 transition-all duration-300 group"
-                aria-label="WhatsApp Golden Scissors Salon"
+                className="w-9 h-9 rounded-full bg-surface border border-border flex items-center justify-center hover:border-primary/40 hover:text-primary transition-all duration-300"
+                aria-label="WhatsApp"
               >
-                <SiWhatsapp className="w-4 h-4 text-[#888888] group-hover:text-[#C9A84C] transition-colors" />
+                <MessageSquare className="w-4 h-4 text-muted-foreground hover:text-primary" />
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-surface border border-border flex items-center justify-center hover:border-primary/40 hover:text-primary transition-all duration-300"
+                aria-label="Instagram"
+              >
+                <FaInstagram className="w-4 h-4 text-muted-foreground hover:text-primary" />
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-surface border border-border flex items-center justify-center hover:border-primary/40 hover:text-primary transition-all duration-300"
+                aria-label="Facebook"
+              >
+                <FaFacebook className="w-4 h-4 text-muted-foreground hover:text-primary" />
               </a>
             </div>
           </div>
 
+          {/* Services */}
+          <div>
+            <h3 className="font-heading text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+              Services
+            </h3>
+            <ul className="space-y-3">
+              {footerLinks.services.map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold text-[#F5F0E8] mb-4 uppercase tracking-wider">
+            <h3 className="font-heading text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
               Quick Links
-            </h4>
+            </h3>
             <ul className="space-y-3">
-              {['Services', 'Gallery', 'About', 'Location', 'FAQ'].map((link) => (
-                <li key={link}>
+              {footerLinks.quickLinks.map((link) => (
+                <li key={link.name}>
                   <a
-                    href={`#${link.toLowerCase()}`}
-                    className="text-sm text-[#888888] hover:text-[#C9A84C] transition-colors duration-300"
+                    href={link.href}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
                   >
-                    {link}
+                    {link.name}
                   </a>
                 </li>
               ))}
@@ -75,53 +107,47 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-semibold text-[#F5F0E8] mb-4 uppercase tracking-wider">
+            <h3 className="font-heading text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
               Contact
-            </h4>
+            </h3>
             <ul className="space-y-3">
-              <li>
+              <li className="flex items-start gap-2">
+                <MapPin className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                <span className="text-sm text-muted-foreground">
+                  Main St, Jinja (Opposite Centenary Park)
+                </span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Phone className="w-4 h-4 text-primary flex-shrink-0" />
                 <a
                   href="tel:+256703891047"
-                  className="flex items-center gap-2 text-sm text-[#888888] hover:text-[#C9A84C] transition-colors"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
                 >
-                  <Phone className="w-3.5 h-3.5 text-[#C9A84C]" />
-                  +256 703 891047
+                  +256 703 891 047
                 </a>
               </li>
-              <li className="flex items-start gap-2 text-sm text-[#888888]">
-                <MapPin className="w-3.5 h-3.5 text-[#C9A84C] mt-0.5 flex-shrink-0" />
-                <span>Plot 3B Main Street, Jinja</span>
+              <li className="flex items-center gap-2">
+                <Clock className="w-4 h-4 text-primary flex-shrink-0" />
+                <span className="text-sm text-muted-foreground">Mon-Sat: 8AM-7PM</span>
               </li>
             </ul>
           </div>
-
-          {/* Hours */}
-          <div>
-            <h4 className="text-sm font-semibold text-[#F5F0E8] mb-4 uppercase tracking-wider">
-              Hours
-            </h4>
-            <div className="flex items-start gap-2 text-sm text-[#888888]">
-              <Clock className="w-3.5 h-3.5 text-[#C9A84C] mt-0.5 flex-shrink-0" />
-              <div>
-                <p>Mon–Sat: 8am–8pm</p>
-                <p>Sun: 10am–6pm</p>
-              </div>
-            </div>
-          </div>
         </div>
+      </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-[#2A2A2A] py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-[#555555]">
+      {/* Bottom Bar */}
+      <div className="border-t border-border">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} Golden Scissors Salon. All rights reserved.
           </p>
-          <p className="text-xs text-[#555555]">
+          <p className="text-sm text-muted-foreground">
             Powered by{' '}
             <a
               href="https://haclab.net"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#888888] hover:text-[#C9A84C] transition-colors font-medium"
+              className="text-primary hover:underline font-medium"
             >
               Haclab Co Ltd
             </a>
